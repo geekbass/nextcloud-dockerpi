@@ -54,3 +54,11 @@ docker logs -t nextcloudpi
 
 # Backups
 WIP... will update soon
+
+# Restarting App
+I have not had any luck restarting the container running the service to get NextCloud back up. So adding something like a systemd service to restart the container or if you are required to start the container will not work. Since we are using peristent data via Docker and using external storage to store files, we can simply delete the current running container and run a new one using the following:
+```
+export DOMAIN=yourdomain.com
+docker rm nextcloudpi
+docker run -d -p 4443:4443 -p 443:443 -p 80:80 -v ncdata:/data -v /media/myCloudDrive:/mnt/myCloudDrive --name nextcloudpi ownyourbits/nextcloudpi-armhf $DOMAIN
+```
